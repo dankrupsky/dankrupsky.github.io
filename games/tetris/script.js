@@ -1,13 +1,86 @@
-const fieldHeight = 20;
-const fieldWidth = 10;
-const spawnHeight = 4;
+const fieldHeight = 20; // 20
+const fieldWidth = 10; // 10
+const spawnHeight = 4; // max height of a figure
 const gameField = [];
-
 const fEmpty = '*';
 const fBlock = 'X';
 
 // Html hook
 const gameFieldDiv = document.getElementById("gamefield"); 
+
+class GameField {
+    constructor(width, height, spawnHeight) {
+        this.width = width;
+        this.height = height;
+        this.actualHeight = height + spawnHeight;
+        this.spawnHeight = spawnHeight;
+        this.field = [];
+        // [y, x]
+        for (let i = 0; i < this.actualHeight; i++) {
+            let newRow = [];
+            for (let j = 0; j < this.width; j++) {
+                newRow.push(fEmpty);
+            }
+            this.field.push(newRow);
+        }
+        this.currentFigure = null;
+    }
+
+    moveFigure(vector) {
+        // Erase
+        for (let coords of this.currentFigure.coords) {
+            this.field[coords[0]][coords[1]] = fEmpty;
+        }
+        for (let coords of this.currentFigure.coords) {
+            coords[0] += vector[0];
+            coords[1] += vector[1];
+            this.field[coords[0]][coords[1]] = fBlock;
+        }
+    }
+
+    spawnFigure(figure) {
+        this.currentFigure = new Figure([[0, 0], [0, 1], [1, 0], [1, 1]], 2, 2);
+        for (let coords of this.currentFigure.coords) {
+             coords[0] = coords[0] + 4 - this.currentFigure.height;
+         }
+    }
+
+    canMove() {
+
+    }
+
+    getString() {
+        let str = "";
+        for (let i = spawnHeight; i < this.actualHeight; i++) {
+            for(let j = 0; j < this.width; j++) {
+                str += this.field[i][j];
+            }
+            str += '\r\n';
+        }
+        return str;
+    }
+
+
+}
+
+class Figure {
+    coords = [];
+    constructor(coordSet, height, width) {
+        this.coords = coordSet;
+        this.height = height;
+        this.width = width;
+    }
+}
+
+class Figures {
+    static getRandomFigure() {
+        return [
+            [0, 0], [0, 1], [1, 0], [1, 1]
+        ]
+    }
+}
+
+
 
 // Elements
 const line = [
@@ -61,43 +134,37 @@ let score = 0;
 let highScore = 0;
 
 
-function render(container) {
-    for (let i = fieldHeight; i > -1; i--) {
-        for(let j = 0; j < fieldWidth; j++) {
-            container.textContent += gameField[i][j];
-        }
-        container.textContent += '\r\n';
-    }
+function render() {
+    gameFieldDiv.textContent = gf.getString();
+
 }
 
-// To Do - consistent coordinates approach
-function update() {
-    for (let i = pos.y; i > pos.y - element.length; i--) {
-        for (let j = pos.x; j < pos.x + element[0].length; j++) {
-            console.log(i, j)
-            gameField[i][j] = element[pos.y - i][j - pos.x];
-        }
-    }
-}
 
 function collisionCheck(direction) {
     // 0 - finalize, 1 - allow, -1 - disallow
+}
+
+function rotateFigure() {
+
 }
 
 function move(e) {
     // console.log(e);
     switch (e) {
         case "ArrowRight":
+            gf.moveFigure([0, 1]);
             console.log(e);
             break;
         case "ArrowLeft":
+            gf.moveFigure([0, -1]);
             console.log(e);
             break;
         case "ArrowUp":
             console.log(e);
             break;
         case "ArrowDown":
-            console.log(e);
+            gf.moveFigure([1, 0]);
+            pos.x--;
             break;
         case " ":
             console.log(e);
@@ -106,14 +173,6 @@ function move(e) {
 }
 
 function init() {
-    for (let i = 0; i < fieldHeight + spawnHeight; i++) {
-        newFieldLine = [];
-        for (let j = 0; j < fieldWidth; j++) {
-            newFieldLine.push(fEmpty);
-        }
-        gameField.push(newFieldLine);
-    }
-
     // Controls
     document.addEventListener('keydown', function(event) {
         move(event.key);
@@ -129,10 +188,7 @@ function start() {
 }
 
 
-
-
-
-
+let gf = new GameField(fieldWidth, fieldHeight, spawnHeight);
+gf.spawnFigure();
 init();
-update();
-render(gameFieldDiv);
+setInterval(render, 200);
