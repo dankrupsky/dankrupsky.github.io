@@ -4,6 +4,7 @@ const spawnHeight = 4; // max height of a figure
 const gameField = [];
 const fEmpty = '*';
 const fBlock = 'X';
+const fFigureBlock = 'H';
 
 // Html hook
 const gameFieldDiv = document.getElementById("gamefield"); 
@@ -15,6 +16,7 @@ class GameField {
         this.actualHeight = height + spawnHeight;
         this.spawnHeight = spawnHeight;
         this.field = [];
+        this.score = 0;
         // [y, x]
         for (let i = 0; i < this.actualHeight; i++) {
             let newRow = [];
@@ -28,25 +30,90 @@ class GameField {
 
     moveFigure(vector) {
         // Erase
-        for (let coords of this.currentFigure.coords) {
-            this.field[coords[0]][coords[1]] = fEmpty;
-        }
-        for (let coords of this.currentFigure.coords) {
-            coords[0] += vector[0];
-            coords[1] += vector[1];
-            this.field[coords[0]][coords[1]] = fBlock;
+        if (this.canMove(vector, this.currentFigure)) {
+            for (let coords of this.currentFigure.coords) {
+                this.field[coords[0]][coords[1]] = fEmpty;
+            }
+            for (let coords of this.currentFigure.coords) {
+                coords[0] += vector[0];
+                coords[1] += vector[1];
+                this.field[coords[0]][coords[1]] = fFigureBlock;
+            }
+        } else if (vector[0] == 1 && vector[1] == 0) {
+            this.finalizeFigure();
         }
     }
 
-    spawnFigure(figure) {
+    dropDown() {
+        while (this.canMove([1, 0], this.currentFigure)) {
+            this.moveFigure([1, 0]);
+        }
+        this.moveFigure([1, 0]); // finalize
+    }
+
+    finalizeFigure() {
+        for (let coords of this.currentFigure.coords) {
+            this.field[coords[0]][coords[1]] = fBlock;
+        }
+        this.checkLines();
+        this.spawnFigure();
+    }
+
+    spawnFigure() {
         this.currentFigure = new Figure([[0, 0], [0, 1], [1, 0], [1, 1]], 2, 2);
         for (let coords of this.currentFigure.coords) {
              coords[0] = coords[0] + 4 - this.currentFigure.height;
          }
     }
 
-    canMove() {
+    canMove(vector) {
+        for (let coords of this.currentFigure.coords) {
+            let newY = coords[0] + vector[0];
+            let newX = coords[1] + vector[1];
+            if ((newY < 0) || (newX < 0) || (newX > this.width - 1) || (newY > this.actualHeight - 1) || (this.field[newY][newX] == fBlock) ) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    checkLines() {
+        let linesToRemove = [];
+        for (let i = this.spawnHeight - 1; i < this.actualHeight; i++) {
+            let completeLine = true;
+            for (let j = 0; j < this.width; j++) {
+                if (this.field[i][j] != fBlock) {
+                    completeLine = false;
+                    break;
+                }
+            }
+            if (completeLine) {
+                linesToRemove.push(i);
+            }
+        }
+
+        
+
+
+        if (linesToRemove.length) {
+            let lowestLine = linesToRemove[linesToRemove.length - 1]
+            let linesToMoveDown = 0;
+            for (let i = lowestLine; i > this.spawnHeight - 1; i--) {
+                if (linesToRemove.includes(i)) {
+                    for (let j = 0; j < this.width; j++) {
+                        this.field[i][j] = fEmpty;
+                    } 
+                    linesToMoveDown++;
+                } else {
+                    for (let j = 0; j < this.width; j++) {
+                        this.field[i+linesToMoveDown][j] = this.field[i][j];
+                        this.field[i][j] = fEmpty;
+                    }
+                }   
+            }
+            this.score += linesToMoveDown;
+        }
+        
     }
 
     getString() {
@@ -139,11 +206,6 @@ function render() {
 
 }
 
-
-function collisionCheck(direction) {
-    // 0 - finalize, 1 - allow, -1 - disallow
-}
-
 function rotateFigure() {
 
 }
@@ -167,7 +229,7 @@ function move(e) {
             pos.x--;
             break;
         case " ":
-            console.log(e);
+            gf.dropDown();
             break;
     }
 }
