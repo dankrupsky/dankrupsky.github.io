@@ -44,6 +44,18 @@ class GameField {
         }
     }
 
+    clearFigure(toClear = this.currentFigure.coords) {
+        for (let b of toClear) {
+            this.field[b[0]][b[1]] = fEmpty;
+        }
+    }
+
+    drawFigure(toClear = this.currentFigure.coords) {
+        for (let b of toClear) {
+            this.field[b[0]][b[1]] = fFigureBlock;
+        }
+    }
+
     dropDown() {
         while (this.canMove([1, 0], this.currentFigure)) {
             this.moveFigure([1, 0]);
@@ -60,10 +72,10 @@ class GameField {
     }
 
     spawnFigure() {
-        this.currentFigure = new Figure([[0, 0], [0, 1], [1, 0], [1, 1]], 2, 2);
+        this.currentFigure = new Figure([[0, 0], [0, 1], [1, 1], [1, 2]]);
         for (let coords of this.currentFigure.coords) {
              coords[0] = coords[0] + 4 - this.currentFigure.height;
-         }
+        }
     }
 
     canMove(vector) {
@@ -75,6 +87,14 @@ class GameField {
             }
         }
         return true;
+    }
+
+    rotate() {
+        let c = this.currentFigure;
+        this.clearFigure();
+        c.coords = c.rotateNinety();
+        this.drawFigure();
+
     }
 
     checkLines() {
@@ -132,10 +152,81 @@ class GameField {
 
 class Figure {
     coords = [];
+    width;
+    height;
+    maxY;
+    maxX;
+    minY;
+    minX;
+    rotateMatrix3 = [
+        [[0, 2], [1, 1], [2, 0]],
+        [[-1, 1], [0, 0], [1, -1]],
+        [[-2, 0], [-1, -1], [0, -2]],
+    ];
     constructor(coordSet, height, width) {
         this.coords = coordSet;
-        this.height = height;
-        this.width = width;
+        this.updateSize();
+        
+    }
+
+    updateSize() {
+        let c = this.coords;
+        let minY = c[0][0];
+        let minX = c[0][1];
+        let maxY = minY;
+        let maxX = minX;
+        for (let i = 1; i < c.length; i++) {
+            if (c[i][0] < minY) {
+                minY = c[i][0];
+            }
+            if (c[i][1] < minX) {
+                minX = c[i][1]
+            }
+
+            if (c[i][0] > maxY) {
+                maxY = c[i][0];
+            }
+            if (c[i][1] > maxX) { 
+                maxX = c[i][1]
+            }   
+        }
+        console.log(minY, minX, maxY, maxX)
+        this.width = maxX - minX + 1;
+        this.height = maxY - minY + 1;
+        this.maxY = maxY;
+        this.maxX = maxX;
+        this.minY = minY;
+        this.minX = minX;
+    }
+
+    rotateNinety() {
+        this.updateSize();
+        let mSide = this.width > this.height ? this.width : this.height;
+        let newCoordSet = [];
+        let c = this.coords;
+        // rotate 90 degrees
+        for (let i = 0; i < mSide; i++) {
+            let cy = i + this.minY;
+            for (let j = 0; j < mSide; j++) {
+                let cx = j + this.minX;
+                for (let tc of c) {
+                    if ((tc[0] == cy) && (tc[1] == cx)) {
+                        console.log(c.toString())                        
+                        let mewx = cx + this.rotateMatrix3[i][j][1];
+                        let mewy = cy + this.rotateMatrix3[i][j][0];
+
+                        newCoordSet.push([mewy, mewx]);
+                    }
+                }
+                
+            }
+        }
+        
+        // fixing position (same lower y and x)
+
+        console.log(newCoordSet.toString());
+        return newCoordSet;
+        
     }
 }
 
@@ -222,7 +313,7 @@ function move(e) {
             console.log(e);
             break;
         case "ArrowUp":
-            console.log(e);
+            gf.rotate();
             break;
         case "ArrowDown":
             gf.moveFigure([1, 0]);
