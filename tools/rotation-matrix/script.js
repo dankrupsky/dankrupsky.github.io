@@ -28,6 +28,7 @@ function generate() {
     // }
 
     // rotate (clocl 90)
+    
     for (let i = size - 1; i > -1; i--) {
         let newRow = [];
         for (let j = 0; j < size; j++) {
@@ -60,7 +61,22 @@ function generate() {
     container.innerHTML = resString;
 
 
-    console.log(initial.toString());
-    console.log(rotated.toString());
-    console.log(res.toString());
+    // console.log(initial.toString());
+    // console.log(rotated.toString());
+    // console.log(res.toString());
 }
+
+/*
+Why do we rotate the matrix 90 degrees counter-clockwise here to get clockwise rotation of a figure (e.g. in the my implementation of tetris)?
+Because of coords. We compute delta coords for each point, a difference between rotated and initial matrices, then we add them to the correspondent points.
+Point at 0,0 in 2x2 matrix:
+[0, 0] - (ccwr90) -> [0, 1]
+diff = [0, 1]
+After applying rotation matrix to a figure:
+[0, 0] + (delta) [0, 1] = [0, 1].
+In other words: we create bijection: I -f-> R.
+where f is a function that transform every element at A[i, j] to B[i, j],
+that's why we need to rotate matrix "backwards".
+Also we always substract rotated from initial, not the other way around,
+because we need to operate form initial (correct) coords to the new ones.
+*/
