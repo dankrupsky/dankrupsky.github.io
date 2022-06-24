@@ -92,7 +92,7 @@ class GameField {
     rotate() {
         let c = this.currentFigure;
         this.clearFigure();
-        rotateNinety();
+        c.rotateNinety();
         this.drawFigure();
 
     }
@@ -250,7 +250,7 @@ class Figure {
             point[1] += deltaX;
         }
 
-        return newCoordSet; // here correct
+        this.coords = newCoordSet;
     }
 }
 
