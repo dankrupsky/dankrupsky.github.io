@@ -17,6 +17,7 @@ class GameField {
         this.spawnHeight = spawnHeight;
         this.field = [];
         this.score = 0;
+        this.figcol = new Figures();
         // [y, x]
         for (let i = 0; i < this.actualHeight; i++) {
             let newRow = [];
@@ -72,9 +73,10 @@ class GameField {
     }
 
     spawnFigure() {
-        this.currentFigure = new Figure([[0, 0], [2, 0], [3, 0], [1, 0]], this);
+        let newFigCoordSet = this.figcol.getRandomFigure();
+        this.currentFigure = new Figure(newFigCoordSet, this);
         for (let coords of this.currentFigure.coords) {
-             coords[0] = coords[0] + 4 - this.currentFigure.height;
+            coords[0] = coords[0] + 4 - this.currentFigure.height;
         }
     }
 
@@ -166,8 +168,8 @@ class Figure {
     ];
     constructor(coordSet, parentfield) {
         this.coords = coordSet;
-        this.updateSize();
         this.gameField = parentfield;
+        this.updateSize();
         
     }
 
@@ -192,7 +194,7 @@ class Figure {
                 maxX = c[i][1]
             }   
         }
-        //console.log(minY, minX, maxY, maxX)
+
         this.width = maxX - minX + 1;
         this.height = maxY - minY + 1;
         this.maxY = maxY;
@@ -242,9 +244,6 @@ class Figure {
         // fixing position (same left-bottom anchor point)
         const deltaY = this.maxY - newMaxY;
         const deltaX = this.minX - newMinX;
-        // console.log(this.maxY, this.minX, newMaxY, newMinX, deltaY, deltaX);
-        // console.log(this.coords.toString());
-        // console.log(newCoordSet.toString());
 
         for (let point of newCoordSet) {
             point[0] += deltaY;
@@ -259,10 +258,20 @@ class Figure {
 }
 
 class Figures {
-    static getRandomFigure() {
-        return [
-            [0, 0], [0, 1], [0, 2], [1, 1]
-        ]
+    figCol = [
+        [[0, 0], [0, 1], [1, 0], [1, 1]],  // square
+        [[0, 0], [1, 0], [2, 0], [3, 0]],  // line
+        [[0, 0], [1, 0], [2, 0], [1, 1]],  // tri-right
+        [[1, 0], [0, 1], [1, 1], [2, 1]],  // tri-left
+        [[1, 0], [1, 1], [0, 1], [0, 2]],  // z-right
+        [[0, 0], [0, 1], [1, 1], [1, 2]],  // z-left
+        [[0, 0], [1, 0], [2, 0], [2, 1]],  // L-right
+        [[2, 0], [2, 1], [1, 1], [0, 1]],  // L-left
+    ];
+    getRandomFigure() {
+        let rnd = Math.floor(Math.random() * this.figCol.length);
+        let copyCoords = structuredClone(this.figCol[rnd]);
+        return copyCoords;
     }
 }
 
