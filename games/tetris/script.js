@@ -72,7 +72,7 @@ class GameField {
     }
 
     spawnFigure() {
-        this.currentFigure = new Figure([[0, 0], [2, 0], [3, 0], [1, 0]]);
+        this.currentFigure = new Figure([[0, 0], [2, 0], [3, 0], [1, 0]], this);
         for (let coords of this.currentFigure.coords) {
              coords[0] = coords[0] + 4 - this.currentFigure.height;
         }
@@ -164,9 +164,10 @@ class Figure {
         [[-2,1], [-1,0], [0,-1], [1,-2]],
         [[-3,0], [-2,-1], [-1,-2], [0,-3]],
     ];
-    constructor(coordSet, height, width) {
+    constructor(coordSet, parentfield) {
         this.coords = coordSet;
         this.updateSize();
+        this.gameField = parentfield;
         
     }
 
@@ -241,23 +242,26 @@ class Figure {
         // fixing position (same left-bottom anchor point)
         const deltaY = this.maxY - newMaxY;
         const deltaX = this.minX - newMinX;
-        console.log(this.maxY, this.minX, newMaxY, newMinX, deltaY, deltaX);
-        console.log(this.coords.toString());
-        console.log(newCoordSet.toString());
+        // console.log(this.maxY, this.minX, newMaxY, newMinX, deltaY, deltaX);
+        // console.log(this.coords.toString());
+        // console.log(newCoordSet.toString());
 
         for (let point of newCoordSet) {
             point[0] += deltaY;
             point[1] += deltaX;
         }
 
-        this.coords = newCoordSet;
+        if (this.gameField.canMove([0, 0], newCoordSet)) {
+            this.coords = newCoordSet;
+        }
+        
     }
 }
 
 class Figures {
     static getRandomFigure() {
         return [
-            [0, 0], [0, 1], [1, 0], [1, 1]
+            [0, 0], [0, 1], [0, 2], [1, 1]
         ]
     }
 }
