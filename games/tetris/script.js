@@ -5,6 +5,8 @@ const gameField = [];
 const fEmpty = '*';
 const fBlock = 'X';
 const fFigureBlock = 'H';
+let gf = null;
+let tetrisInstance = null;
 
 // Html hook
 const gameFieldDiv = document.getElementById("gamefield"); 
@@ -16,7 +18,9 @@ class GameField {
         this.actualHeight = height + spawnHeight;
         this.spawnHeight = spawnHeight;
         this.field = [];
-        this.score = 0;
+        this.linesCleared = 0;
+        this.blocksCleared = 0;
+        this.isPlaying = true;
         this.figcol = new Figures();
         // [y, x]
         for (let i = 0; i < this.actualHeight; i++) {
@@ -27,6 +31,9 @@ class GameField {
             this.field.push(newRow);
         }
         this.currentFigure = null;
+
+        // First figure
+        this.spawnFigure();
     }
 
     moveFigure(vector) {
@@ -67,16 +74,22 @@ class GameField {
     finalizeFigure() {
         for (let coords of this.currentFigure.coords) {
             this.field[coords[0]][coords[1]] = fBlock;
+            if (coords[0] < this.spawnHeight) {
+                this.isPlaying = false;  // game over
+                return false;
+            }
         }
         this.checkLines();
         this.spawnFigure();
     }
 
     spawnFigure() {
-        let newFigCoordSet = this.figcol.getRandomFigure();
-        this.currentFigure = new Figure(newFigCoordSet, this);
-        for (let coords of this.currentFigure.coords) {
-            coords[0] = coords[0] + 4 - this.currentFigure.height;
+        if (this.isPlaying) {
+            let newFigCoordSet = this.figcol.getRandomFigure();
+            this.currentFigure = new Figure(newFigCoordSet, this);
+            for (let coords of this.currentFigure.coords) {
+                coords[0] = coords[0] + 4 - this.currentFigure.height;
+            }
         }
     }
 
@@ -88,7 +101,8 @@ class GameField {
                 return false;
             }
         }
-        return true;
+
+        return this.isPlaying;
     }
 
     rotate() {
@@ -100,6 +114,7 @@ class GameField {
     }
 
     checkLines() {
+        // Check every line, record cleared
         let linesToRemove = [];
         for (let i = this.spawnHeight - 1; i < this.actualHeight; i++) {
             let completeLine = true;
@@ -116,7 +131,7 @@ class GameField {
 
         
 
-
+        // Remove cleared lines, shift upper lines down
         if (linesToRemove.length) {
             let lowestLine = linesToRemove[linesToRemove.length - 1]
             let linesToMoveDown = 0;
@@ -126,6 +141,8 @@ class GameField {
                         this.field[i][j] = fEmpty;
                     } 
                     linesToMoveDown++;
+                    this.linesCleared++;
+                    this.blocksCleared += this.width;
                 } else {
                     for (let j = 0; j < this.width; j++) {
                         this.field[i+linesToMoveDown][j] = this.field[i][j];
@@ -147,6 +164,10 @@ class GameField {
             str += '\n';
         }
         return str;
+    }
+
+    getClearedBlocks() {
+        return this.blocksCleared;
     }
 
 
@@ -275,12 +296,6 @@ class Figures {
     }
 }
 
-
-function render() {
-    gameFieldDiv.textContent = gf.getString();
-
-}
-
 function move(e) {
     switch (e) {
         case "ArrowRight":
@@ -294,7 +309,6 @@ function move(e) {
             break;
         case "ArrowDown":
             gf.moveFigure([1, 0]);
-            pos.x--;
             break;
         case " ":
             gf.dropDown();
@@ -302,23 +316,60 @@ function move(e) {
     }
 }
 
+class Tetris {
+    intervalID;
+    constructor() {
+        this.gameField = new GameField(fieldWidth, fieldHeight, spawnHeight);
+    }
+
+    start() {
+        this.resume(200);
+    }
+
+    resume(t) {
+        this.intervalID = setInterval(this.tick.bind(this), t);
+    }
+
+    stop(id) {
+        clearInterval(id)
+    }
+
+    tick() {
+        if (this.gameField.isPlaying) {
+            this.gameField.moveFigure([1, 0]);
+            console.log("1");
+        } else {
+            this.stop(this.intervalID);
+            console.log("0");
+        }
+
+        // Speed update
+    }
+
+    isPlaying() {
+        return this.gameField.isPlaying
+    }
+    
+}
+
 function init() {
     // Controls
     document.addEventListener('keydown', function(event) {
         move(event.key);
     });
-}
-
-function start() {
-    let score = 0;
-
-    let rnd = Math.floor(Math.random() * elCollection.length)
-    let element = elCollection[rnd];
-    let pos = 21 + element.length;
+    
+    tetrisInstance = new Tetris();
+    gf = tetrisInstance.gameField;
+    tetrisInstance.start();
 }
 
 
-let gf = new GameField(fieldWidth, fieldHeight, spawnHeight);
-gf.spawnFigure();
+function render() {
+    gameFieldDiv.textContent = gf.getString();
+}
+
+
+
+
 init();
-setInterval(render, 200);
+setInterval(render, 50);
