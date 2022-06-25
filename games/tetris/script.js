@@ -76,7 +76,6 @@ class GameField {
             this.field[coords[0]][coords[1]] = fBlock;
             if (coords[0] < this.spawnHeight) {
                 this.isPlaying = false;  // game over
-                return false;
             }
         }
         this.checkLines();
@@ -320,10 +319,13 @@ class Tetris {
     intervalID;
     constructor() {
         this.gameField = new GameField(fieldWidth, fieldHeight, spawnHeight);
+        this.currentLevel = 1;
+        this.linesPerlevel = 5;
+        this.initSpeed = 600;
     }
 
     start() {
-        this.resume(200);
+        this.resume(this.initSpeed);
     }
 
     resume(t) {
@@ -331,12 +333,23 @@ class Tetris {
     }
 
     stop(id) {
-        clearInterval(id)
+        clearInterval(id);
+    }
+
+    getSpeed() {
+        this.currentLevel++;
+        console.log((this.initSpeed - this.currentLevel * 50));
+        return (this.initSpeed - this.currentLevel * 50);
     }
 
     tick() {
         if (this.gameField.isPlaying) {
             this.gameField.moveFigure([1, 0]);
+            if (this.gameField.linesCleared > (this.currentLevel * this.linesPerlevel)) {
+                console.log("speed+");
+                this.stop(this.intervalID);
+                this.resume(this.getSpeed());
+            }
             console.log("1");
         } else {
             this.stop(this.intervalID);
@@ -347,7 +360,7 @@ class Tetris {
     }
 
     isPlaying() {
-        return this.gameField.isPlaying
+        return this.gameField.isPlaying;
     }
     
 }
