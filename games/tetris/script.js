@@ -276,65 +276,8 @@ class Figures {
 }
 
 
-
-// Elements
-const line = [
-    [fBlock],
-    [fBlock],
-    [fBlock],
-    [fBlock],
-];
-
-const square = [
-    [fBlock, fBlock],
-    [fBlock, fBlock],
-];
-
-const leftZigZag = [
-    [fBlock, fBlock, fEmpty],
-    [fEmpty, fBlock, fBlock],
-];
-
-const rightZigZag = [
-    [fEmpty, fBlock, fBlock],
-    [fBlock, fBlock, fEmpty],
-];
-
-const triThing = [
-    [fEmpty, fBlock, fEmpty],
-    [fEmpty, fBlock, fBlock],  
-];
-
-const leftLThing = [
-    [fBlock, fEmpty],
-    [fBlock, fEmpty],
-    [fBlock, fBlock],
-];
-
-const rightLThing = [
-    [fEmpty, fBlock],
-    [fEmpty, fBlock],
-    [fBlock, fBlock], 
-];
-
-const elCollection = [line, square, leftZigZag, rightZigZag, triThing, leftLThing, rightLThing];
-
-let isPlaying = false;
-let pos = {
-    x: 5,
-    y: 5
-};
-let element = leftZigZag;
-let score = 0;
-let highScore = 0;
-
-
 function render() {
     gameFieldDiv.textContent = gf.getString();
-
-}
-
-function rotateFigure() {
 
 }
 
