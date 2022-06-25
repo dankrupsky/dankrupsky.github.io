@@ -341,22 +341,18 @@ class Tetris {
 
     getSpeed() {
         this.currentLevel++;
-        console.log((this.initSpeed - this.currentLevel * 50));
         return (this.initSpeed - this.currentLevel * 50);
     }
 
     tick() {
         if (this.gameField.isPlaying) {
             this.gameField.moveFigure([1, 0]);
-            if (this.gameField.linesCleared > (this.currentLevel * this.linesPerlevel)) {
-                console.log("speed+");
+            if (this.gameField.linesCleared >= (this.currentLevel * this.linesPerlevel)) {
                 this.stop(this.intervalID);
                 this.resume(this.getSpeed());
             }
-            console.log("1");
         } else {
             this.stop(this.intervalID);
-            console.log("0");
         }
 
         // Speed update
