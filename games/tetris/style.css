@@ -1,0 +1,22 @@
+body {
+    display: flex;
+}
+
+.field {
+    white-space: pre;
+    font-family: monospace;
+}
+
+.game {
+    margin: 10px 10px;
+}
+
+.info {
+    margin: 10px 10px;
+}
+
+.info-line {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}

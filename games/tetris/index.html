@@ -3,9 +3,16 @@
     <head>
         <title>Tetris</title>
         <script defer src="script.js"></script>
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
-        <!-- 1 line without this style -->
-        <div style="white-space: pre; font-family: monospace;" id="gamefield"></div>
+        <div class="game">
+            <div class="field" id="gamefield"></div>
+        </div>
+        <div class="info">
+            <div class="info-line">Level: <div id="level"></div></div>
+            <div class="info-line">Score: <div id="score"></div></div>
+            <div class="info-line"><div id="status"></div></div>
+        </div>
     </body>
 </html>

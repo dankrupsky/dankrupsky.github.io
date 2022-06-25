@@ -9,7 +9,10 @@ let gf = null;
 let tetrisInstance = null;
 
 // Html hook
-const gameFieldDiv = document.getElementById("gamefield"); 
+const gameFieldDiv = document.getElementById("gamefield");
+const levelDiv = document.getElementById("level");
+const scoreDiv = document.getElementById("score");
+const isPlayingDiv = document.getElementById("status");
 
 class GameField {
     constructor(width, height, spawnHeight) {
@@ -379,6 +382,9 @@ function init() {
 
 function render() {
     gameFieldDiv.textContent = gf.getString();
+    levelDiv.textContent = tetrisInstance.currentLevel;
+    scoreDiv.textContent = gf.blocksCleared;
+    isPlayingDiv.innerHTML = tetrisInstance.isPlaying() ? '<span style="color: green">Playing</span>' : '<span style="color: red">Game Over</span>';
 }
 
 
