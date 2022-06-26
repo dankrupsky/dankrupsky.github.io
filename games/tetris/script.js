@@ -89,8 +89,10 @@ class GameField {
         if (this.isPlaying) {
             let newFigCoordSet = this.figcol.getRandomFigure();
             this.currentFigure = new Figure(newFigCoordSet, this);
+            const xCenter =  Math.floor(this.width / 2) - Math.floor(this.currentFigure.width / 2);
             for (let coords of this.currentFigure.coords) {
                 coords[0] = coords[0] + 4 - this.currentFigure.height;
+                coords[1] += xCenter;
             }
         }
     }
