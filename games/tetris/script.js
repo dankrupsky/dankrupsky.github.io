@@ -270,15 +270,34 @@ class Figure {
         const deltaY = this.maxY - newMaxY;
         const deltaX = this.minX - newMinX;
 
-        for (let point of newCoordSet) {
-            point[0] += deltaY;
-            point[1] += deltaX;
-        }
+        this.shift(newCoordSet, deltaY, deltaX);
 
+        // try to fit in the same anchor point
         if (this.gameField.canMove([0, 0], newCoordSet)) {
             this.coords = newCoordSet;
+            return; // finished, skip horizontal shift offset attempt
         }
-        
+
+        // try to fit with some horizontal shift offset (< new width == old height)
+        for (let i = 1; i < this.height; i++) {
+            if (this.gameField.canMove([0, i], newCoordSet)) {
+                this.shift(newCoordSet, 0, i)
+                this.coords = newCoordSet;
+                break;
+            }
+            if (this.gameField.canMove([0, -i], newCoordSet)) {
+                this.shift(newCoordSet, 0, -i)
+                this.coords = newCoordSet;
+                break;
+            }
+        }  
+    }
+
+    shift(coordset = this.coords, y, x) {
+        for (let point of coordset) {
+            point[0] += y;
+            point[1] += x;
+        }
     }
 }
 
