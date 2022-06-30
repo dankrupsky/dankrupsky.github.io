@@ -13,7 +13,25 @@ const coefficients = {
         value1: "kg",
         value2: "pounds",
         c: 2.20462,
-    }
+    },
+
+    2: {
+        value1: "l",
+        value2: "gallonImperial",
+        c: 0.219969,
+    },
+
+    3: {
+        value1: "l",
+        value2: "gallonUSLiquid",
+        c: 0.264172,
+    },
+
+    4: {
+        value1: "m",
+        value2: "feet",
+        c: 3.28084,
+    },
 };
 
 function init() {
@@ -41,10 +59,10 @@ function update() {
     for (let item in coefficients) {
         // straight
         let v = document.getElementById(item);
-        v.value = initValue.value * coefficients[item]["c"];
+        v.value = (initValue.value * coefficients[item]["c"]).toFixed(3);
         // reverse
         v = document.getElementById(item + "r");
-        v.value = initValue.value / coefficients[item]["c"];
+        v.value = (initValue.value / coefficients[item]["c"]).toFixed(3);
     }
 }
 
