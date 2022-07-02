@@ -1,9 +1,18 @@
 * {
     margin: 0;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 #initial-value {
-    margin-top: 10px;
+    
+}
+
+.initial-container {
+    border-style: solid 25px black;
+    background-color: gray;
+    padding: 20px 0 20px 20px;
+    width: 270px;
 }
 
 body {

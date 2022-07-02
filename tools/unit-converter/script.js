@@ -32,6 +32,12 @@ const coefficients = {
         value2: "feet",
         c: 3.28084,
     },
+
+    5: {
+        value1: "kg",
+        value2: "oz",
+        c: 35.274,
+    },
 };
 
 function init() {
