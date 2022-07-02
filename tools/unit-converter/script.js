@@ -11,7 +11,7 @@ function checkInput() {
 const coefficients = {
     1: {
         value1: "kg",
-        value2: "pounds",
+        value2: "pounds (lb)",
         c: 2.20462,
     },
 
@@ -39,14 +39,14 @@ function init() {
         // straight
         let t = document.createElement('p');
         let v = document.createElement('input');
-        t.textContent = coefficients[item]["value1"] + "2" + coefficients[item]["value2"];
+        t.textContent = coefficients[item]["value1"] + " -> " + coefficients[item]["value2"];
         v.setAttribute("id", item);
         containerDiv.appendChild(t);
         containerDiv.appendChild(v);
         // reverse
         t = document.createElement('p');
         v = document.createElement('input');
-        t.textContent = coefficients[item]["value2"] + "2" + coefficients[item]["value1"];
+        t.textContent = coefficients[item]["value2"] + " -> " + coefficients[item]["value1"];
         v.setAttribute("id", item + "r");
         containerDiv.appendChild(t);
         containerDiv.appendChild(v);
