@@ -1,0 +1,11 @@
+* {
+    margin: 0;
+}
+
+#initial-value {
+    margin-top: 10px;
+}
+
+#container > * {
+    margin-top: 5px;
+}
