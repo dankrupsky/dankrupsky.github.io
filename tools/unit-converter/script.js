@@ -40,7 +40,18 @@ const coefficients = {
     },
 };
 
+const polynomial = {
+    301: {
+      value1: "°C",
+      value2: "°F",
+      straight: (e) => { return (e * 9 / 5) + 32 },
+      reverse: (e) => { return (e - 32) * 5 / 9 },
+    },
+
+};
+
 function init() {
+    // constant
     for (let item in coefficients) {
         // straight
         let t = document.createElement('p');
@@ -57,11 +68,30 @@ function init() {
         containerDiv.appendChild(t);
         containerDiv.appendChild(v);
     }
+
+    // polynomial
+    for (let item in polynomial) {
+        // straight
+        let t = document.createElement('p');
+        let v = document.createElement('input');
+        t.textContent = polynomial[item]["value1"] + " -> " + polynomial[item]["value2"];
+        v.setAttribute("id", item);
+        containerDiv.appendChild(t);
+        containerDiv.appendChild(v);
+        // reverse
+        t = document.createElement('p');
+        v = document.createElement('input');
+        t.textContent = polynomial[item]["value2"] + " -> " + polynomial[item]["value1"];
+        v.setAttribute("id", item + "r");
+        containerDiv.appendChild(t);
+        containerDiv.appendChild(v);
+    }
 }
 
 
 
 function update() {
+    // constant conversion
     for (let item in coefficients) {
         // straight
         let v = document.getElementById(item);
@@ -69,6 +99,16 @@ function update() {
         // reverse
         v = document.getElementById(item + "r");
         v.value = (initValue.value / coefficients[item]["c"]).toFixed(3);
+    }
+
+    // polynomial conversion
+    for (let item in polynomial) {
+        // straight
+        let v = document.getElementById(item);
+        v.value = (polynomial[item].straight(initValue.value)).toFixed(3);
+        // reverse
+        v = document.getElementById(item + "r");
+        v.value = (polynomial[item].reverse(initValue.value)).toFixed(3);
     }
 }
 
