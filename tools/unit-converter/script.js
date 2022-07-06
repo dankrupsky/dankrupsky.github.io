@@ -38,6 +38,12 @@ const coefficients = {
         value2: "oz",
         c: 35.274,
     },
+
+    6: {
+        value1: "cm",
+        value2: "inches",
+        c: 0.393701,
+    },
 };
 
 const polynomial = {
