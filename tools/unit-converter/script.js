@@ -60,37 +60,45 @@ function init() {
     // constant
     for (let item in coefficients) {
         // straight
+        let newDivBlock = document.createElement('div');
+        newDivBlock.setAttribute("class", "conversion-block");
         let t = document.createElement('p');
         let v = document.createElement('input');
         t.textContent = coefficients[item]["value1"] + " -> " + coefficients[item]["value2"];
         v.setAttribute("id", item);
-        containerDiv.appendChild(t);
-        containerDiv.appendChild(v);
+        newDivBlock.appendChild(t);
+        newDivBlock.appendChild(v);
+        containerDiv.appendChild(newDivBlock);
         // reverse
         t = document.createElement('p');
         v = document.createElement('input');
         t.textContent = coefficients[item]["value2"] + " -> " + coefficients[item]["value1"];
         v.setAttribute("id", item + "r");
-        containerDiv.appendChild(t);
-        containerDiv.appendChild(v);
+        newDivBlock.appendChild(t);
+        newDivBlock.appendChild(v);
+        containerDiv.appendChild(newDivBlock);
     }
 
     // polynomial
     for (let item in polynomial) {
         // straight
+        let newDivBlock = document.createElement('div');
+        newDivBlock.setAttribute("class", "conversion-block");
         let t = document.createElement('p');
         let v = document.createElement('input');
         t.textContent = polynomial[item]["value1"] + " -> " + polynomial[item]["value2"];
         v.setAttribute("id", item);
-        containerDiv.appendChild(t);
-        containerDiv.appendChild(v);
+        newDivBlock.appendChild(t);
+        newDivBlock.appendChild(v);
+        containerDiv.appendChild(newDivBlock);
         // reverse
         t = document.createElement('p');
         v = document.createElement('input');
         t.textContent = polynomial[item]["value2"] + " -> " + polynomial[item]["value1"];
         v.setAttribute("id", item + "r");
-        containerDiv.appendChild(t);
-        containerDiv.appendChild(v);
+        newDivBlock.appendChild(t);
+        newDivBlock.appendChild(v);
+        containerDiv.appendChild(newDivBlock);
     }
 }
 
