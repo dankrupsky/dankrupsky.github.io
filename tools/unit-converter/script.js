@@ -44,6 +44,12 @@ const coefficients = {
         value2: "inches",
         c: 0.393701,
     },
+
+    7: {
+        value1: "feet",
+        value2: "inches",
+        c: 12,
+    },
 };
 
 const polynomial = {
