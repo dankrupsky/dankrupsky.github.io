@@ -1,6 +1,21 @@
-* {
-    margin-bottom: 10px;
-    margin-left: 10px;
+html, body {
+    margin: 10px 0 0 20px;
+    background-color: antiquewhite;
+}
+
+header {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 48px;
+    margin-right: 24px;
+}
+
+h2 {
+    margin-top: 28px;
+    color: grey;
 }
 
 a {
