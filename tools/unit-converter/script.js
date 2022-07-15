@@ -50,6 +50,12 @@ const coefficients = {
         value2: "inches",
         c: 12,
     },
+
+    8: {
+        value1: "km",
+        value2: "miles",
+        c: 0.621371,
+    },
 };
 
 const polynomial = {
