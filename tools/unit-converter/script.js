@@ -84,6 +84,7 @@ function init() {
         let v = document.createElement('input');
         t.textContent = coefficients[item]["value1"] + " -> " + coefficients[item]["value2"];
         v.setAttribute("id", item);
+        v.setAttribute("disabled", true);
         newDivBlock.appendChild(t);
         newDivBlock.appendChild(v);
         containerDiv.appendChild(newDivBlock);
@@ -92,6 +93,7 @@ function init() {
         v = document.createElement('input');
         t.textContent = coefficients[item]["value2"] + " -> " + coefficients[item]["value1"];
         v.setAttribute("id", item + "r");
+        v.setAttribute("disabled", true);
         newDivBlock.appendChild(t);
         newDivBlock.appendChild(v);
         containerDiv.appendChild(newDivBlock);
@@ -106,6 +108,7 @@ function init() {
         let v = document.createElement('input');
         t.textContent = polynomial[item]["value1"] + " -> " + polynomial[item]["value2"];
         v.setAttribute("id", item);
+        v.setAttribute("disabled", true);
         newDivBlock.appendChild(t);
         newDivBlock.appendChild(v);
         containerDiv.appendChild(newDivBlock);
@@ -114,6 +117,7 @@ function init() {
         v = document.createElement('input');
         t.textContent = polynomial[item]["value2"] + " -> " + polynomial[item]["value1"];
         v.setAttribute("id", item + "r");
+        v.setAttribute("disabled", true);
         newDivBlock.appendChild(t);
         newDivBlock.appendChild(v);
         containerDiv.appendChild(newDivBlock);
