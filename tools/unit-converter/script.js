@@ -4,9 +4,11 @@ const containerDiv = document.getElementById("container");
 initValue.addEventListener("input", checkInput);
 initValue.addEventListener("input", update);
 
+
 function checkInput() {
     initValue.value = initValue.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');
 }
+
 
 const coefficients = {
     1: {
@@ -64,6 +66,7 @@ const coefficients = {
     },
 };
 
+
 const polynomial = {
     301: {
       value1: "°C",
@@ -74,56 +77,40 @@ const polynomial = {
 
 };
 
+
+function addConversionDiv(valOne, valTwo, item) {
+    let newDivBlock = document.createElement('div');
+    newDivBlock.setAttribute("class", "conversion-block");
+    let t = document.createElement('p');
+    let v = document.createElement('input');
+    t.textContent = valOne + " -> " + valTwo;
+    v.setAttribute("id", item);
+    v.setAttribute("disabled", true);
+    newDivBlock.appendChild(t);
+    newDivBlock.appendChild(v);
+    containerDiv.appendChild(newDivBlock);
+    t = document.createElement('p');
+    v = document.createElement('input');
+    t.textContent = valTwo + " -> " + valOne;
+    v.setAttribute("id", item + "r");
+    v.setAttribute("disabled", true);
+    newDivBlock.appendChild(t);
+    newDivBlock.appendChild(v);
+    containerDiv.appendChild(newDivBlock);
+}
+
+
 function init() {
     // constant
     for (let item in coefficients) {
-        // straight
-        let newDivBlock = document.createElement('div');
-        newDivBlock.setAttribute("class", "conversion-block");
-        let t = document.createElement('p');
-        let v = document.createElement('input');
-        t.textContent = coefficients[item]["value1"] + " -> " + coefficients[item]["value2"];
-        v.setAttribute("id", item);
-        v.setAttribute("disabled", true);
-        newDivBlock.appendChild(t);
-        newDivBlock.appendChild(v);
-        containerDiv.appendChild(newDivBlock);
-        // reverse
-        t = document.createElement('p');
-        v = document.createElement('input');
-        t.textContent = coefficients[item]["value2"] + " -> " + coefficients[item]["value1"];
-        v.setAttribute("id", item + "r");
-        v.setAttribute("disabled", true);
-        newDivBlock.appendChild(t);
-        newDivBlock.appendChild(v);
-        containerDiv.appendChild(newDivBlock);
+        addConversionDiv(coefficients[item]["value1"], coefficients[item]["value2"], item);
     }
 
     // polynomial
     for (let item in polynomial) {
-        // straight
-        let newDivBlock = document.createElement('div');
-        newDivBlock.setAttribute("class", "conversion-block");
-        let t = document.createElement('p');
-        let v = document.createElement('input');
-        t.textContent = polynomial[item]["value1"] + " -> " + polynomial[item]["value2"];
-        v.setAttribute("id", item);
-        v.setAttribute("disabled", true);
-        newDivBlock.appendChild(t);
-        newDivBlock.appendChild(v);
-        containerDiv.appendChild(newDivBlock);
-        // reverse
-        t = document.createElement('p');
-        v = document.createElement('input');
-        t.textContent = polynomial[item]["value2"] + " -> " + polynomial[item]["value1"];
-        v.setAttribute("id", item + "r");
-        v.setAttribute("disabled", true);
-        newDivBlock.appendChild(t);
-        newDivBlock.appendChild(v);
-        containerDiv.appendChild(newDivBlock);
+        addConversionDiv(polynomial[item]["value1"], polynomial[item]["value2"], item);
     }
 }
-
 
 
 function update() {
@@ -147,6 +134,7 @@ function update() {
         v.value = (polynomial[item].reverse(initValue.value)).toFixed(3);
     }
 }
+
 
 init();
 update();
