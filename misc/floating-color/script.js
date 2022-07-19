@@ -16,7 +16,8 @@ function setBackgroundColor() {
 function getNewRate(currentRate = -1) {
     // range [minSpeed, maxSpeed]
     // + sign by default, invert sign if argument is used
-    return -Math.sign(currentRate) * (Math.floor(Math.random() * maxSpeed) + minSpeed);
+    const rangeLength = maxSpeed - minSpeed + 1; 
+    return -Math.sign(currentRate) * (Math.floor(Math.random() * rangeLength) + minSpeed);
 }
 
 
