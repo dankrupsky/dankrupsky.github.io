@@ -41,7 +41,6 @@ function update() {
         Brate = getNewRate(Brate)
     }
 
-    console.log(R,G,B);
     setBackgroundColor();
 }
 
