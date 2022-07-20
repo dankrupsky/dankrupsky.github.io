@@ -10,6 +10,7 @@ let tetrisInstance = null;
 
 // Html hook
 const gameFieldDiv = document.getElementById("gamefield");
+const nextFigureDiv = document.getElementById("next-figure");
 const levelDiv = document.getElementById("level");
 const scoreDiv = document.getElementById("score");
 const isPlayingDiv = document.getElementById("status");
@@ -25,6 +26,7 @@ class GameField {
         this.blocksCleared = 0;
         this.isPlaying = true;
         this.figcol = new Figures();
+        this.nextFigure = this.figcol.getRandomFigure();
         // [y, x]
         for (let i = 0; i < this.actualHeight; i++) {
             let newRow = [];
@@ -87,7 +89,8 @@ class GameField {
 
     spawnFigure() {
         if (this.isPlaying) {
-            let newFigCoordSet = this.figcol.getRandomFigure();
+            let newFigCoordSet = this.nextFigure;
+            this.nextFigure = this.figcol.getRandomFigure();
             this.currentFigure = new Figure(newFigCoordSet, this);
             const xCenter =  Math.floor(this.width / 2) - Math.floor(this.currentFigure.width / 2);
             for (let coords of this.currentFigure.coords) {
@@ -159,11 +162,34 @@ class GameField {
         
     }
 
-    getString() {
+    getFieldString() {
         let str = "";
         for (let i = spawnHeight; i < this.actualHeight; i++) {
             for(let j = 0; j < this.width; j++) {
                 str += this.field[i][j];
+            }
+            str += '\n';
+        }
+        return str;
+    }
+
+    getNextFigureString() {
+        let nextField = [
+            ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'],
+            ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'],
+            ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'],
+            ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'],
+        ];
+
+        let str = "";
+
+        for (let item of this.nextFigure) {
+            nextField[item[0]][item[1]] = "*";
+        }
+
+        for (let i = 0; i < spawnHeight; i++) {
+            for (let j = 0; j < spawnHeight; j++) {
+                str += nextField[i][j];
             }
             str += '\n';
         }
@@ -398,7 +424,8 @@ function init() {
 
 
 function render() {
-    gameFieldDiv.textContent = gf.getString();
+    gameFieldDiv.textContent = gf.getFieldString();
+    nextFigureDiv.innerHTML = gf.getNextFigureString();
     levelDiv.textContent = tetrisInstance.currentLevel;
     scoreDiv.textContent = gf.blocksCleared;
     isPlayingDiv.innerHTML = tetrisInstance.isPlaying() ? '<span style="color: green">Playing</span>' : '<span style="color: red">Game Over</span>';
