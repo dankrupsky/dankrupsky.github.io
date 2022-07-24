@@ -1,60 +1,85 @@
 * {
-    margin: 0;
     font-weight: bold;
     font-size: 18px;
 }
 
-@media screen and (max-width: 1020px) { 
-    * { 
-        float: none;
-    }
-
-    .initial-container {
-        border-style: solid 25px black;
-        background-color: silver;
-        padding: 20px 0 20px 20px;
-        width: 90%;
-    }
-
-    .conversion-block {
-        display: inline-block;
-        box-sizing: border-box;
-        width: 90%;
-        border: 4px solid black;
-        margin: 10px;
-        padding: 5px;
-    }
-
-    #container {
-        width: 90%;
-    }
-
-    
-}
 
 .initial-container {
     border-style: solid 25px black;
     background-color: silver;
-    padding: 20px 0 20px 20px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px 0 30px 24px;
     width: 270px;
+}
+
+.initial-info {
+    text-align: center;
+    margin-top: 0px;
+    margin-right: 20px;
+    margin-bottom: 8px;
+}
+
+/* Hide number input arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 body {
     margin-left: 10px;
 }
 
-#container > * {
-    margin-top: 5px;
-}
-
-p {
-    margin-bottom: 4px;
+#container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .conversion-block {
     display: inline-block;
-    box-sizing: border-box;
     border: 4px solid black;
-    margin: 10px;
+    margin: 10px 10px 0 0;
     padding: 5px;
 }
+
+.conversion-block p {
+    margin: 4px 0px 6px 0px;
+}
+
+.conversion-block input {
+    margin: 0px 0px 8px 0px;
+}
+
+
+@media screen and (max-width: 1020px) { 
+    * { 
+        font-size: 26px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .initial-container {
+        margin: 0;
+        padding: 8px 0 12px 0;
+        width: 100%;
+    }
+
+    .initial-container input {
+        margin-left: auto;
+        margin-right: auto;
+        align-self: center;
+        display: block;
+        text-align: center;
+    }
+} 
