@@ -1,4 +1,5 @@
 * {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
     font-size: 18px;
 }
@@ -12,6 +13,10 @@
     margin-right: auto;
     padding: 24px 0 30px 24px;
     width: 270px;
+}
+
+.initial-container input {
+    width: 236px;
 }
 
 .initial-info {
@@ -62,7 +67,7 @@ body {
 
 @media screen and (max-width: 1020px) { 
     * { 
-        font-size: 26px;
+        
     }
 
     body {
@@ -75,11 +80,33 @@ body {
         width: 100%;
     }
 
+    .initial-container p {
+        font-size: 72px;
+    }
+
     .initial-container input {
         margin-left: auto;
         margin-right: auto;
         align-self: center;
         display: block;
         text-align: center;
+        font-size: 68px;
+        width: 500px;
+    }
+
+    .conversion-block {
+        width: 45%;
+        margin: 8px 8px;
+    }
+
+    .conversion-block p {
+        font-size: 32px;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .conversion-block input {
+        font-size: 48px;
+        width: 400px;
     }
 } 
