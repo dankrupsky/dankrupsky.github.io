@@ -8,12 +8,18 @@ const fFigureBlock = 'H';
 let gf = null;
 let tetrisInstance = null;
 
-// Html hook
+// Html hooks
 const gameFieldDiv = document.getElementById("gamefield");
 const nextFigureDiv = document.getElementById("next-figure");
 const levelDiv = document.getElementById("level");
 const scoreDiv = document.getElementById("score");
 const isPlayingDiv = document.getElementById("status");
+// Buttons
+const rotateBtn = document.getElementById("rotate-btn");
+const leftBtn = document.getElementById("left-btn");
+const rightBtn = document.getElementById("right-btn");
+const downBtn = document.getElementById("down-btn");
+const dropBtn = document.getElementById("drop-btn");
 
 class GameField {
     constructor(width, height, spawnHeight) {
@@ -416,6 +422,12 @@ function init() {
     document.addEventListener('keydown', function(event) {
         move(event.key);
     });
+
+    rotateBtn.addEventListener('click', () => move("ArrowUp"));
+    leftBtn.addEventListener('click', () => move("ArrowLeft"));
+    rightBtn.addEventListener('click', () => move("ArrowRight"));
+    downBtn.addEventListener('click', () => move("ArrowDown"));
+    dropBtn.addEventListener('click', () => move(" "));
     
     tetrisInstance = new Tetris();
     gf = tetrisInstance.gameField;
