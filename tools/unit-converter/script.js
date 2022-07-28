@@ -19,13 +19,13 @@ const coefficients = {
 
     2: {
         value1: "l",
-        value2: "gallonImperial",
+        value2: "gal (UK)",
         c: 0.219969,
     },
 
     3: {
         value1: "l",
-        value2: "gallonUSLiquid",
+        value2: "gal (US)",
         c: 0.264172,
     },
 
@@ -60,7 +60,7 @@ const coefficients = {
     },
 
     9: {
-        value1: "tbspUS",
+        value1: "tbsp",
         value2: "ml",
         c: 14.7868,
     },
