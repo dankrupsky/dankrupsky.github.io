@@ -1,44 +1,33 @@
 class FloatingColor {
     constructor(min = 1, max = 3) {
-        this.R = Math.floor(Math.random() * 256);
-        this.G = Math.floor(Math.random() * 256);
-        this.B = Math.floor(Math.random() * 256);
         this.minSpeed = min;
         this.maxSpeed = max;
-        this.Rrate = this.getNewRate();
-        this.Grate = this.getNewRate();
-        this.Brate = this.getNewRate();
+        this.RGB = [];
+        this.rates = [];
+        for (let i = 0; i < 3; i++) {
+            this.RGB.push(Math.floor(Math.random() * 256));
+            this.rates.push(this.getNewRate());
+        }
     }
 
     getNewRate(currentRate = -1) {
         // range [minSpeed, maxSpeed]
-        // + sign by default, invert sign if argument is used
+        // plus sign by default
+        // invert sign if argument is used
         const rangeLength = this.maxSpeed - this.minSpeed + 1; 
         return -Math.sign(currentRate) * (Math.floor(Math.random() * rangeLength) + this.minSpeed);
     }
 
     update() {
-        this.R = this.R + this.Rrate;
-        if (this.R > 255 || this.R < 0) {
-            this.R = this.R - this.Rrate;
-            this.Rrate = this.getNewRate(this.Rrate);
-            
-        }
-    
-        this.G = this.G + this.Grate;
-        if (this.G > 255 || this.G < 0) {
-            this.G = this.G - this.Grate;
-            this.Grate = this.getNewRate(this.Grate);
-    
-        }
-    
-        this.B = this.B + this.Brate;
-        if (this.B > 255 || this.B < 0) {
-            this.B = this.B - this.Brate;
-            this.Brate = this.getNewRate(this.Brate)
+        for (let i = 0; i < 3; i++) {
+            this.RGB[i] = this.RGB[i] + this.rates[i];
+            if (this.RGB[i] > 255 || this.RGB[i] < 0) {
+                this.RGB[i] = this.RGB[i] - this.rates[i];
+                this.rates[i] = this.getNewRate(this.rates[i]); 
+            }
         }
     }
-}
+};
 
 
 function setBackgroundColor(R, G, B) {
@@ -47,7 +36,7 @@ function setBackgroundColor(R, G, B) {
 
 function update() {
     rgb.update();
-    setBackgroundColor(rgb.R, rgb.G, rgb.B);
+    setBackgroundColor(rgb.RGB[0], rgb.RGB[1], rgb.RGB[2]);
 }
 
 
