@@ -6,7 +6,7 @@ class FloatingColor {
         this.rates = [];
         for (let i = 0; i < 3; i++) {
             this.RGB.push(Math.floor(Math.random() * 256));
-            this.rates.push(this.getNewRate([1, -1][Math.floor(Math.random() * 2)]));
+            this.rates.push(this.getNewRate((Math.random() - 0.5)));
         }
     }
 
