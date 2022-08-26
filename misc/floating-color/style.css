@@ -1,0 +1,8 @@
+.controls {
+    width: 200px;
+    height: 80px;
+    margin: auto auto;
+    background-color: red;
+    color: green;
+    opacity: 40%;
+}
