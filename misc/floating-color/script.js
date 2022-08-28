@@ -39,7 +39,12 @@ function update() {
     setBackgroundColor(rgb.RGB[0], rgb.RGB[1], rgb.RGB[2]);
 }
 
+const slider = document.getElementById("slider-speed");
+slider.onchange = function() {
+    clearInterval(speedSIID);
+    speedSIID = setInterval(update, slider.value);
+}
 
 let rgb = new FloatingColor(1, 3);
 setBackgroundColor();
-setInterval(update, 40);
+let speedSIID = setInterval(update, slider.value);
