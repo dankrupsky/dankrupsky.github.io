@@ -51,3 +51,4 @@ slider.onchange = function() {
 let rgb = new FloatingColor(1, 3);
 setBackgroundColor();
 let speedSIID = setInterval(update, slider.value);
+sliderLabel.textContent = slider.value;
