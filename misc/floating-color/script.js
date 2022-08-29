@@ -40,9 +40,12 @@ function update() {
 }
 
 const slider = document.getElementById("slider-speed");
+const sliderLabel = document.getElementById("slider-label");
 slider.onchange = function() {
     clearInterval(speedSIID);
-    speedSIID = setInterval(update, slider.value);
+    const newVal = slider.value;
+    speedSIID = setInterval(update, newVal);
+    sliderLabel.textContent = newVal;
 }
 
 let rgb = new FloatingColor(1, 3);
