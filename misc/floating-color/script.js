@@ -39,6 +39,8 @@ function update() {
     setBackgroundColor(rgb.RGB[0], rgb.RGB[1], rgb.RGB[2]);
 }
 
+
+// Slider
 const slider = document.getElementById("slider-speed");
 const sliderLabel = document.getElementById("slider-label");
 slider.onchange = function() {
@@ -52,3 +54,12 @@ let rgb = new FloatingColor(1, 3);
 setBackgroundColor();
 let speedSIID = setInterval(update, slider.value);
 sliderLabel.textContent = slider.value;
+
+
+// Fullscreen
+const fullscreenButton = document.getElementById("fullscreen-button");
+fullscreenButton.addEventListener("click", goFullScreen);
+
+function goFullScreen() {
+    document.documentElement.requestFullscreen();
+}
