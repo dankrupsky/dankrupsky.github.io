@@ -58,12 +58,16 @@ sliderLabel.textContent = slider.value;
 
 // Fullscreen
 const fullscreenButton = document.getElementById("fullscreen-button");
+fullscreenButton.textContent = "Go Fullscreen";
 fullscreenButton.addEventListener("click", toggleFullScreen);
 
 function toggleFullScreen() {
     if( window.innerHeight == screen.height) {
         document.exitFullscreen();
+        fullscreenButton.textContent = "Go Fullscreen";
+        
     } else {
         document.documentElement.requestFullscreen();
+        fullscreenButton.textContent = "Exit Fullscreen";
     }  
 }
