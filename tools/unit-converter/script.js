@@ -69,6 +69,12 @@ const coefficients = {
         value1: "cups",
         value2: "ml",
         c: 236.588,
+    },
+
+    10: {
+        value1: "drops",
+        value2: "ml",
+        c: 0.05,
     }
 };
 
