@@ -2,9 +2,21 @@
     border: 3px solid black;
     border-radius: 12px;
     width: 200px;
-    height: 120px;
+    height: 180px;
     margin: auto auto;
     background-color: red;
     color: green;
     opacity: 40%;
+}
+
+.fs-button-container {
+    margin: 20px 0 0 0;
+    text-align: center;
+}
+
+.fullscreen-button {
+    width: 160px;
+    height: 28px;
+    border: 2px solid black;
+    border-radius: 3px;
 }
