@@ -65,10 +65,12 @@ fullscreenButton.addEventListener("click", toggleFullScreen);
 // Reversed (from previous version) order of if cases,
 // because check happens after fs mode switched
 document.addEventListener('fullscreenchange', () => {
-    if( window.innerHeight == screen.height) {
+    if (window.innerHeight == screen.height) {
+        // fullscreen mode
         controlsDiv.classList.remove("add-animation");
         controlsDiv.classList.add("remove-animation"); 
     } else {
+        // window mode
         controlsDiv.classList.remove("remove-animation");
         controlsDiv.classList.add("add-animation");
     }  
