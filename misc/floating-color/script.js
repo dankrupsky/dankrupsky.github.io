@@ -54,12 +54,25 @@ let rgb = new FloatingColor(1, 3);
 setBackgroundColor();
 let speedSIID = setInterval(update, slider.value);
 sliderLabel.textContent = slider.value;
+const controlsDiv = document.querySelector(".controls");
 
 
-// Fullscreen
+// Fullscreen Events
 const fullscreenButton = document.getElementById("fullscreen-button");
 fullscreenButton.textContent = "Go Fullscreen";
 fullscreenButton.addEventListener("click", toggleFullScreen);
+
+// Reversed (from previous version) order of if cases,
+// because check happens after fs mode switched
+document.addEventListener('fullscreenchange', () => {
+    if( window.innerHeight == screen.height) {
+        controlsDiv.classList.remove("add-animation");
+        controlsDiv.classList.add("remove-animation"); 
+    } else {
+        controlsDiv.classList.remove("remove-animation");
+        controlsDiv.classList.add("add-animation");
+    }  
+});
 
 function toggleFullScreen() {
     if( window.innerHeight == screen.height) {

@@ -6,7 +6,7 @@
     margin: auto auto;
     background-color: red;
     color: green;
-    opacity: 40%;
+    opacity: 60%;
 }
 
 .fs-button-container {
@@ -19,4 +19,28 @@
     height: 28px;
     border: 2px solid black;
     border-radius: 3px;
+}
+
+/* Animations */
+
+.remove-animation {
+    animation-name: invis;
+	animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes invis {
+	from {opacity: 60%;}
+	to {opacity: 0%;}
+}
+
+.add-animation {
+    animation-name: reveal;
+	animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes reveal {
+	from {opacity: 0%;}
+	to {opacity: 60%;}
 }
