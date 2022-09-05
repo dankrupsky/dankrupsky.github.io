@@ -65,11 +65,13 @@ fullscreenButton.addEventListener("click", toggleFullScreen);
 function hideControls() {
     controlsDiv.classList.remove("add-animation");
     controlsDiv.classList.add("remove-animation");
+    document.body.requestPointerLock();
 }
 
 function showControls() {
     controlsDiv.classList.remove("remove-animation");
     controlsDiv.classList.add("add-animation");
+    document.exitPointerLock();
 }
 
 function toggleFullScreen() {
