@@ -62,19 +62,15 @@ const fullscreenButton = document.getElementById("fullscreen-button");
 fullscreenButton.textContent = "Go Fullscreen";
 fullscreenButton.addEventListener("click", toggleFullScreen);
 
-// Reversed (from previous version) order of if cases,
-// because check happens after fs mode switched
-document.addEventListener('fullscreenchange', () => {
-    if (window.innerHeight == screen.height) {
-        // fullscreen mode
-        controlsDiv.classList.remove("add-animation");
-        controlsDiv.classList.add("remove-animation"); 
-    } else {
-        // window mode
-        controlsDiv.classList.remove("remove-animation");
-        controlsDiv.classList.add("add-animation");
-    }  
-});
+function hideControls() {
+    controlsDiv.classList.remove("add-animation");
+    controlsDiv.classList.add("remove-animation");
+}
+
+function showControls() {
+    controlsDiv.classList.remove("remove-animation");
+    controlsDiv.classList.add("add-animation");
+}
 
 function toggleFullScreen() {
     if( window.innerHeight == screen.height) {
@@ -85,4 +81,13 @@ function toggleFullScreen() {
         document.documentElement.requestFullscreen();
         fullscreenButton.textContent = "Exit Fullscreen";
     }  
+}
+
+// Mouse not moving auto hiding controls
+let timeout;
+timeout = setTimeout(hideControls, 2000);
+document.onmousemove = function(){
+  clearTimeout(timeout);
+  showControls();
+  timeout = setTimeout(hideControls, 2000);
 }
