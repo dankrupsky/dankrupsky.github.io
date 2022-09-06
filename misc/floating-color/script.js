@@ -82,11 +82,13 @@ function toggleFullScreen() {
 // Mouse not moving auto hiding controls
 let timeout;
 timeout = setTimeout(hideControls, 2000);
-document.onmousemove = function(){
-  clearTimeout(timeout);
-  showControls();
-  timeout = setTimeout(hideControls, 2000);
+function resetControlsFadeTimer() {
+    clearTimeout(timeout);
+    showControls();
+    timeout = setTimeout(hideControls, 2000);
 }
+
+document.onmousemove = resetControlsFadeTimer;
 
 
 // Init
@@ -95,3 +97,4 @@ setBackgroundColor();
 let speedSIID = setInterval(update, slider.value);
 sliderLabel.textContent = slider.value;
 const controlsDiv = document.querySelector(".controls");
+resetControlsFadeTimer();
