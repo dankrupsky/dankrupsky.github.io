@@ -46,15 +46,9 @@ const sliderLabel = document.getElementById("slider-label");
 slider.onchange = function() {
     clearInterval(speedSIID);
     const newVal = slider.value;
-    speedSIID = setInterval(update, newVal);
+    speedSIID = setInterval(update, (1000 / newVal));
     sliderLabel.textContent = newVal;
 }
-
-let rgb = new FloatingColor(1, 3);
-setBackgroundColor();
-let speedSIID = setInterval(update, slider.value);
-sliderLabel.textContent = slider.value;
-const controlsDiv = document.querySelector(".controls");
 
 
 // Fullscreen Events
@@ -93,3 +87,11 @@ document.onmousemove = function(){
   showControls();
   timeout = setTimeout(hideControls, 2000);
 }
+
+
+// Init
+let rgb = new FloatingColor(1, 3);
+setBackgroundColor();
+let speedSIID = setInterval(update, slider.value);
+sliderLabel.textContent = slider.value;
+const controlsDiv = document.querySelector(".controls");
