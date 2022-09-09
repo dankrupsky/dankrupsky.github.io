@@ -1,0 +1,9 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    margin: 0 auto;
+    display: block;
+}
