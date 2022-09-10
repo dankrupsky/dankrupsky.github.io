@@ -72,10 +72,12 @@ function toggleFullScreen() {
     if( window.innerHeight == screen.height) {
         document.exitFullscreen();
         fullscreenButton.textContent = "Go Fullscreen";
+        fullscreenButton.style.backgroundColor = "#A3E4D7";
         
     } else {
         document.documentElement.requestFullscreen();
         fullscreenButton.textContent = "Exit Fullscreen";
+        fullscreenButton.style.backgroundColor = "#F5B7B1";
     }  
 }
 
