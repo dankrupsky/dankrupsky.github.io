@@ -14,13 +14,6 @@
     text-align: center;
 }
 
-.fullscreen-button {
-    width: 160px;
-    height: 28px;
-    border: 2px solid black;
-    border-radius: 3px;
-}
-
 .slider-block-header {
     font-size: 26px;
 }
