@@ -75,6 +75,12 @@ const coefficients = {
         value1: "drops",
         value2: "ml",
         c: 0.05,
+    },
+
+    11: {
+        value1: "psi",
+        value2: "atm",
+        c: 0.068046,
     }
 };
 
