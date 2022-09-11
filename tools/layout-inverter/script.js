@@ -11,7 +11,7 @@ pasteBtn.addEventListener("click", pasteTextToClipboard);
 const keysArray = '~!@#$%^&QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>?`qwertyuiop[]asdfghjkl;\'\\zxcvbnm,./Ё!"№;%:?ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭ/ЯЧСМИТЬБЮ,ёйцукенгшщзхъфывапролджэ\\ячсмитьбю.';
 const keysLength = keysArray.length;
 
-function invert(e) {
+function invert() {
     outInput.value = "";
     for (let i of inInput.value) {
         let keyIndex = keysArray.indexOf(i);
