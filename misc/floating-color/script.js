@@ -31,7 +31,7 @@ class FloatingColor {
 
 
 function setBackgroundColor(R, G, B) {
-    document.body.style.backgroundColor = `rgb(${R}, ${G}, ${B})`;
+    colorsDiv.style.backgroundColor = `rgba(${R}, ${G}, ${B}, ${brightnessAlpha})`;
 }
 
 function update() {
@@ -42,12 +42,23 @@ function update() {
 
 // Slider
 const slider = document.getElementById("slider-speed");
-const sliderLabel = document.getElementById("slider-label");
+const sliderLabel = document.getElementById("speed-label");
 slider.onchange = function() {
     clearInterval(speedSIID);
     const newVal = slider.value;
     speedSIID = setInterval(update, (1000 / newVal));
     sliderLabel.textContent = newVal;
+}
+
+
+// Brightness
+const brightnessSlider = document.getElementById("brightness");
+const brightnessLabel = document.getElementById("brightness-label");
+let brightnessAlpha = brightnessSlider.value / 100;
+brightnessLabel.textContent = brightnessSlider.value;
+brightnessSlider.onchange = function() {
+    brightnessAlpha = brightnessSlider.value / 100;
+    brightnessLabel.textContent = brightnessSlider.value;
 }
 
 
@@ -94,6 +105,7 @@ document.onmousemove = resetControlsFadeTimer;
 
 
 // Init
+const colorsDiv = document.getElementById("colors");
 let rgb = new FloatingColor(1, 3);
 setBackgroundColor();
 let speedSIID = setInterval(update, slider.value);
