@@ -2,3 +2,18 @@ body {
     margin: 0;
     background-color: aliceblue;
 }
+
+.btn-common {
+    border: 3px solid black;
+    border-radius: 25px;
+    width: 160px;
+    height: 50px;
+    transition: 0.2s all;
+}
+
+/* To Fix: Wobly text */
+.btn-common:active {
+	transform: scale(0.98);
+	box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.1);
+    backface-visibility: hidden;
+}
