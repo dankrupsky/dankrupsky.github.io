@@ -11,9 +11,11 @@ body {
     transition: 0.2s all;
 }
 
-/* To Fix: Wobly text */
-.btn-common:active {
-	transform: scale(0.98);
+
+.btn-common:active {    
+    /* scale() - wobbly text problem */
+	/* transform: scale(0.98); */
+    transform: translate3d(0px, 2px, -10px);
 	box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.1);
     backface-visibility: hidden;
 }
