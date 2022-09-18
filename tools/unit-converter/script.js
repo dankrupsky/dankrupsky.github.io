@@ -71,16 +71,22 @@ const coefficients = {
         c: 236.588,
     },
 
-    10: {
+    11: {
         value1: "drops",
         value2: "ml",
         c: 0.05,
     },
 
-    11: {
+    12: {
         value1: "psi",
         value2: "atm",
         c: 0.068046,
+    },
+
+    14: {
+        value1: "tsp",
+        value2: "ml",
+        c: 4.92892,
     }
 };
 
