@@ -24,3 +24,19 @@ body {
 	box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.1);
     backface-visibility: hidden;
 }
+
+.conversion-block {
+    border: 3px solid black;
+    border-radius: 25px;
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    padding: 5px;
+}
+
+.conversion-block p {
+    margin: 4px 0px 6px 0px;
+}
+
+.conversion-block input {
+    margin: 0px 0px 8px 0px;
+}
